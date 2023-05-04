@@ -10,7 +10,7 @@ class Controller(QMainWindow, Ui_MainWindow):
     player_wins = 0
     computer_wins = 0
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.setupUi(self)
         self.Rockbutton.clicked.connect(lambda: self.rockpush())
@@ -27,8 +27,12 @@ class Controller(QMainWindow, Ui_MainWindow):
                                  'lizard eats paper, paper disproves Spock, Spock vaporizes rock,\n'
                                  'and as it always has, rock crushes scissors.')
 
-    def rockpush(self):
-        # player_choice = 'Rock'
+    def rockpush(self) -> None:
+        """
+        Function to select the player's choice as rock and generate a random computer choice, then determine the
+        outcome and update the scores.
+        :return: None
+        """
         computer_choice = random.randint(1, 5)
         if computer_choice == 3:
             Controller.player_wins += 1
@@ -46,8 +50,12 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.Message_box.setText('Draw, both chose Rock')
         self.update_scores()
 
-    def paperpush(self):
-        # player_choice = 'Paper'
+    def paperpush(self) -> None:
+        """
+        Function to select the player's choice as paper and generate a random computer choice, then determine the
+        outcome and update the scores.
+        :return: None
+        """
         computer_choice = random.randint(1, 5)
         if computer_choice == 1:
             Controller.player_wins += 1
@@ -65,8 +73,12 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.Message_box.setText('Draw, both chose Paper')
         self.update_scores()
 
-    def scissorpush(self):
-        # player_choice = 'Scissors'
+    def scissorpush(self) -> None:
+        """
+        Function to select the player's choice as scissors and generate a random computer choice, then determine the
+        outcome and update the scores.
+        :return: None
+        """
         computer_choice = random.randint(1, 5)
         if computer_choice == 2:
             Controller.player_wins += 1
@@ -84,8 +96,12 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.Message_box.setText('Draw, both chose Scissors')
         self.update_scores()
 
-    def lizardpush(self):
-        # player_choice = 'Lizard'
+    def lizardpush(self) -> None:
+        """
+        Function to select the player's choice as lizard and generate a random computer choice, then determine the
+        outcome and update the scores.
+        :return: None
+        """
         computer_choice = random.randint(1, 5)
         if computer_choice == 2:
             Controller.player_wins += 1
@@ -103,8 +119,12 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.Message_box.setText('Draw, both chose Lizard')
         self.update_scores()
 
-    def spockpush(self):
-        # player_choice = 'Spock'
+    def spockpush(self) -> None:
+        """
+        Function to select the player's choice as spock and generate a random computer choice, then determine the
+        outcome and update the scores.
+        :return: None
+        """
         computer_choice = random.randint(1, 5)
         if computer_choice == 1:
             Controller.player_wins += 1
@@ -122,7 +142,11 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.Message_box.setText('Draw, both chose Spock')
         self.update_scores()
 
-    def resetbutton(self):
+    def resetbutton(self) -> None:
+        """
+        Function to reset the scores and the message box message.
+        :return: None
+        """
         Controller.computer_wins = 0
         Controller.player_wins = 0
         self.update_scores()
@@ -132,6 +156,10 @@ class Controller(QMainWindow, Ui_MainWindow):
                                  'lizard eats paper, paper disproves Spock, Spock vaporizes rock,\n'
                                  'and as it always has, rock crushes scissors.')
 
-    def update_scores(self):
+    def update_scores(self) -> None:
+        """
+        Function to update the scores displayed on the GUI.
+        :return: None
+        """
         self.Player_wins.setText(f'Player wins: {self.player_wins}')
         self.Computer_wins.setText(f'Computer wins: {self.computer_wins}')
