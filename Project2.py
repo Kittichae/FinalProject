@@ -14,8 +14,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(900, 800)
-        MainWindow.setMinimumSize(QtCore.QSize(600, 600))
-        MainWindow.setMaximumSize(QtCore.QSize(900, 900))
+        MainWindow.setMinimumSize(QtCore.QSize(900, 800))
+        MainWindow.setMaximumSize(QtCore.QSize(900, 800))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Rockbutton = QtWidgets.QPushButton(self.centralwidget)
