@@ -14,6 +14,7 @@ class Controller(QMainWindow, Ui_MainWindow):
     last_sign = 0   # Setting the starting function identifier to 0
     func_status = False     # Setting a variable for whether a function is in process to False
     button_push = False     # Setting a variable for whether a numeric button has been pressed to False
+    enter_status = False    # Settign a variable for whether the enter button has been pressed to False
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -126,7 +127,8 @@ class Controller(QMainWindow, Ui_MainWindow):
         it resets the output_box to the previous entry and resets the last_sign variable in order to prevent calling
         functions without enough entries, while also setting button_push to True so a function button can be pressed
         and a second entry can be input. The try except block catches any oddities from the functions such as if a
-        ZeroDivisionError occurs and the output_box string becomes a string that cannot be float converted.
+        ZeroDivisionError occurs and the output_box string becomes a string that cannot be float converted. Finally, the
+        function changes the enter_status variable to True for the pressed function.
         :return:
         """
         if self.button_push:
@@ -142,6 +144,7 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.last_sign = 0
             self.func_status = True
             self.button_push = True
+        self.enter_status = True
 
     def flipsign(self) -> None:
         """
@@ -193,16 +196,21 @@ class Controller(QMainWindow, Ui_MainWindow):
     def pressed(self, button) -> None:
         """
         A function to add the number associated with the button that has been pressed to the output_box string. If the
-        string in the output_box is "0", the button pressed will overwrite the 0. If func_status is True, i.e. there is
-        a non-zero string in the output_box but the user has pressed a function button indicating that the entry is
-        no longer being edited, the pressed function will overwrite the entry to start another entry, and will set
-        func_status to False to indicate that the new entry is not done being edited. If the func_status is false and
-        the output_box string is not 0, the button pressed will be added to the output_box string.
+        string in the output_box is "0", the button pressed will overwrite the 0. If the enter_status is True, i.e. the
+        enter button has been pressed, the button will overwrite the output box and set the enter_status to False.
+        If func_status is True, i.e. there is a non-zero string in the output_box but the user has pressed a function
+        button indicating that the entry is no longer being edited, the pressed function will overwrite the entry to
+        start another entry, and will set func_status to False to indicate that the new entry is not done being edited.
+        If the func_status is false and the output_box string is not 0, the button pressed will be added to the
+        output_box string.
         :param button: Relates to buttons 0-9 being pressed.
         :return:
         """
         if self.output_box.text() == "0":
             self.output_box.setText(f"{button}")
+        elif self.enter_status:
+            self.output_box.setText(f"{button}")
+            self.enter_status = False
         elif self.func_status:
             self.output_box.setText(f"{button}")
             self.func_status = False
