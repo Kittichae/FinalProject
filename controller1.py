@@ -14,7 +14,7 @@ class Controller(QMainWindow, Ui_MainWindow):
     last_sign = 0   # Setting the starting function identifier to 0
     func_status = False     # Setting a variable for whether a function is in process to False
     button_push = False     # Setting a variable for whether a numeric button has been pressed to False
-    enter_status = False    # Settign a variable for whether the enter button has been pressed to False
+    enter_status = False    # Setting a variable for whether the enter button has been pressed to False
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -26,8 +26,8 @@ class Controller(QMainWindow, Ui_MainWindow):
         starting total_num value and the last_sign variable is set accordingly for the calculate function. If the button
         is pressed after a second entry, it automatically calls the calculate function for the two entries.
         The func_status is set to True in order to prevent the pressed function from adding to the
-        established string and the button_push is set to False to prevent repeated calling of the function
-        with no new entries.
+        established string, the button_push is set to False to prevent repeated calling of the function
+        with no new entries, and the enter_status is set to False for the pressed function.
         :return:
         """
         if self.button_push:
@@ -38,6 +38,7 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.last_sign = "+"
             self.func_status = True
             self.button_push = False
+            self.enter_status = False
 
     def calculate(self) -> None:
         """
@@ -105,8 +106,8 @@ class Controller(QMainWindow, Ui_MainWindow):
         starting total_num value and the last_sign variable is set accordingly for the calculate function. If the button
         is pressed after a second entry, it automatically calls the calculate function for the two entries.
         The func_status is set to True in order to prevent the pressed function from adding to the
-        established string and the button_push is set to False to prevent repeated calling of the function
-        with no new entries.
+        established string, the button_push is set to False to prevent repeated calling of the function
+        with no new entries, and the enter_status is set to False for the pressed function.
         :return:
         """
         if self.button_push:
@@ -117,6 +118,7 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.last_sign = "/"
             self.func_status = True
             self.button_push = False
+            self.enter_status = False
 
     def enter(self) -> None:
         """
@@ -144,6 +146,7 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.last_sign = 0
             self.func_status = True
             self.button_push = True
+        self.total_num = float(self.output_box.text())
         self.enter_status = True
 
     def flipsign(self) -> None:
@@ -161,8 +164,8 @@ class Controller(QMainWindow, Ui_MainWindow):
         starting total_num value and the last_sign variable is set accordingly for the calculate function. If the button
         is pressed after a second entry, it automatically calls the calculate function for the two entries.
         The func_status is set to True in order to prevent the pressed function from adding to the
-        established string and the button_push is set to False to prevent repeated calling of the function
-        with no new entries.
+        established string, the button_push is set to False to prevent repeated calling of the function
+        with no new entries, and the enter_status is set to False for the pressed function.
         :return:
         """
         if self.button_push:
@@ -173,6 +176,7 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.last_sign = "*"
             self.func_status = True
             self.button_push = False
+            self.enter_status = False
 
     def power(self) -> None:
         """
@@ -180,8 +184,8 @@ class Controller(QMainWindow, Ui_MainWindow):
         starting total_num value and the last_sign variable is set accordingly for the calculate function. If the button
         is pressed after a second entry, it automatically calls the calculate function for the two entries.
         The func_status is set to True in order to prevent the pressed function from adding to the
-        established string and the button_push is set to False to prevent repeated calling of the function
-        with no new entries.
+        established string, the button_push is set to False to prevent repeated calling of the function
+        with no new entries, and the enter_status is set to False for the pressed function.
         :return:
         """
         if self.button_push:
@@ -192,6 +196,7 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.last_sign = "^"
             self.func_status = True
             self.button_push = False
+            self.enter_status = False
 
     def pressed(self, button) -> None:
         """
@@ -202,21 +207,23 @@ class Controller(QMainWindow, Ui_MainWindow):
         button indicating that the entry is no longer being edited, the pressed function will overwrite the entry to
         start another entry, and will set func_status to False to indicate that the new entry is not done being edited.
         If the func_status is false and the output_box string is not 0, the button pressed will be added to the
-        output_box string.
+        output_box string. If enter_status is False, proceed as normal, if it is True, overwrite total_num in order to
+        allow for logical calculator operation.
         :param button: Relates to buttons 0-9 being pressed.
         :return:
         """
         if self.output_box.text() == "0":
             self.output_box.setText(f"{button}")
         elif self.enter_status:
+            self.total_num = 0
             self.output_box.setText(f"{button}")
-            self.enter_status = False
         elif self.func_status:
             self.output_box.setText(f"{button}")
-            self.func_status = False
         else:
             self.output_box.setText(f'{self.output_box.text()}{button}')
         self.button_push = True
+        self.enter_status = False
+        self.func_status = False
 
     def subtract(self) -> None:
         """
@@ -224,8 +231,8 @@ class Controller(QMainWindow, Ui_MainWindow):
         starting total_num value and the last_sign variable is set accordingly for the calculate function. If the button
         is pressed after a second entry, it automatically calls the calculate function for the two entries.
         The func_status is set to True in order to prevent the pressed function from adding to the
-        established string and the button_push is set to False to prevent repeated calling of the function
-        with no new entries.
+        established string, the button_push is set to False to prevent repeated calling of the function
+        with no new entries, and the enter_status is set to False for the pressed function.
         :return:
         """
         if self.button_push:
@@ -236,3 +243,4 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.last_sign = "-"
             self.func_status = True
             self.button_push = False
+            self.enter_status = False
